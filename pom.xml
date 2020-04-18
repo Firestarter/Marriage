@@ -27,6 +27,10 @@
             <id>lenis0012-repo</id>
             <url>http://ci.lenis0012.com/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -44,15 +48,9 @@
             <systemPath>${project.basedir}/lib/PlotSquared.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.lenis0012.bukkit</groupId>
+            <groupId>com.github.Firestarter</groupId>
             <artifactId>lenisutils</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.lenis0012.updater</groupId>
-            <artifactId>updater-api</artifactId>
-            <version>1.0</version>
+            <version>master-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -72,14 +70,6 @@
             <properties>
                 <project.updaterInfo>44364</project.updaterInfo>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.lenis0012.updater</groupId>
-                    <artifactId>updater-bukkit</artifactId>
-                    <version>1.0</version>
-                    <scope>compile</scope>
-                </dependency>
-            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -120,14 +110,6 @@
             <properties>
                 <project.updaterInfo>https://raw.githubusercontent.com/lenis0012/Marriage/master/latest_version.json</project.updaterInfo>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.lenis0012.updater</groupId>
-                    <artifactId>updater-spigot</artifactId>
-                    <version>1.0</version>
-                    <scope>compile</scope>
-                </dependency>
-            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -217,15 +199,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <!-- Generate javadoc -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
-                <configuration>
-                    <show>public</show>
-                </configuration>
             </plugin>
         </plugins>
     </build>
