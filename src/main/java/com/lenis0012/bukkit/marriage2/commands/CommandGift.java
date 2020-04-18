@@ -32,7 +32,7 @@ public class CommandGift extends Command {
         }
 
         ItemStack item = player.getItemInHand();
-        if(item == null || item.getType() == Material.AIR) {
+        if (item.getType() == Material.AIR) {
             reply(Message.NO_ITEM);
             return;
         }

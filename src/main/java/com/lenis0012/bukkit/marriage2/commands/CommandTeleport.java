@@ -5,6 +5,7 @@ import com.lenis0012.bukkit.marriage2.MPlayer;
 import com.lenis0012.bukkit.marriage2.Marriage;
 import com.lenis0012.bukkit.marriage2.config.Message;
 import com.lenis0012.bukkit.marriage2.config.Settings;
+import io.papermc.lib.PaperLib;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -40,27 +41,29 @@ public class CommandTeleport extends Command {
             return;
         }
 
-        Location destination = partner.getLocation();
-        if(player.getGameMode() != GameMode.CREATIVE) {
-            destination = getSafeLocation(destination);
-        }
+        final Location destination = partner.getLocation();
+        PaperLib.getChunkAtAsync(destination).thenAccept(chunk -> {
+            Location safeDestination = destination;
 
-        if(destination == null) {
-            reply(Message.TELEPORT_UNSAFE);
-            return;
-        }
+            if(player.getGameMode() != GameMode.CREATIVE) {
+                safeDestination = getSafeLocation(destination);
+            }
 
-        if(!payFee()) return;
+            if(safeDestination == null) {
+                reply(Message.TELEPORT_UNSAFE);
+                return;
+            }
 
-        player.teleport(destination);
-        reply(Message.TELEPORTED);
-        partner.sendMessage(ChatColor.translateAlternateColorCodes('&', Message.TELEPORTED_2.toString()));
+            PaperLib.teleportAsync(player, safeDestination);
+            reply(Message.TELEPORTED);
+            partner.sendMessage(ChatColor.translateAlternateColorCodes('&', Message.TELEPORTED_2.toString()));
+        });
     }
 
     private Location getSafeLocation(Location destination) {
         World world = destination.getWorld();
         Block block = destination.getBlock();
-        if(block == null || block.getY() < 0 || block.getY() > world.getMaxHeight()) {
+        if(block.getY() < 0 || block.getY() > world.getMaxHeight()) {
             return null; // Out of bounds, cant teleport to void or from a bizarre height.
         }
 
