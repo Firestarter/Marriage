@@ -78,7 +78,6 @@ public class MarriageCore extends MarriageBase {
     @Register(name = "listeners", type = Register.Type.ENABLE)
     public void registerListeners() {
         register(new PlayerListener(this));
-        register(new ChatListener(this));
         register(new DatabaseListener(this));
         register(new KissListener(this));
         if(Settings.PLOTSQUARED_AUTO_TRUST.value() && Bukkit.getPluginManager().isPluginEnabled("PlotSquared")) {
@@ -91,10 +90,7 @@ public class MarriageCore extends MarriageBase {
     @Register(name = "commands", type = Register.Type.ENABLE)
     public void registerCommands() {
         register(
-                CommandChat.class,
-                CommandChatSpy.class,
                 CommandDivorce.class,
-                CommandGender.class,
                 CommandGift.class,
                 CommandHeal.class,
                 CommandHelp.class,
@@ -103,7 +99,6 @@ public class MarriageCore extends MarriageBase {
                 CommandMarry.class,
                 CommandMigrate.class,
                 CommandPriest.class,
-                CommandPVP.class,
                 CommandReload.class,
                 CommandSeen.class,
                 CommandSethome.class,

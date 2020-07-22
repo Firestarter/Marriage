@@ -27,20 +27,6 @@ public interface MPlayer {
     boolean isMarriageRequested(UUID from);
 
     /**
-     * Get the player's gender.
-     *
-     * @return Player's gender.
-     */
-    Gender getGender();
-
-    /**
-     * Set the player's gender.
-     *
-     * @param gender Player's gender.
-     */
-    void setGender(Gender gender);
-
-    /**
      * Get current marriage of the player.
      *
      * @return Player's marriage, NULL if not married.

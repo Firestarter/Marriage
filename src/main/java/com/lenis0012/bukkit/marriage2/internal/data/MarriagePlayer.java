@@ -1,6 +1,5 @@
 package com.lenis0012.bukkit.marriage2.internal.data;
 
-import com.lenis0012.bukkit.marriage2.Gender;
 import com.lenis0012.bukkit.marriage2.MData;
 import com.lenis0012.bukkit.marriage2.MPlayer;
 import com.lenis0012.bukkit.marriage2.Marriage;
@@ -22,7 +21,6 @@ public class MarriagePlayer implements MPlayer {
     private final UUID uuid;
     private String lastName;
     private MData marriage;
-    private Gender gender = Gender.UNKNOWN;
     private boolean inChat;
     private boolean chatSpy;
     private boolean priest;
@@ -33,7 +31,6 @@ public class MarriagePlayer implements MPlayer {
         this.uuid = uuid;
         if(data.next()) {
             this.lastName = data.getString("last_name");
-            this.gender = Gender.valueOf(data.getString("gender"));
             this.priest = data.getBoolean("priest");
             this.lastLogout = data.getLong("lastlogin");
         }
@@ -48,7 +45,7 @@ public class MarriagePlayer implements MPlayer {
     void save(PreparedStatement ps) throws SQLException {
         ps.setString(1, uuid.toString());
         ps.setString(2, lastName);
-        ps.setString(3, gender.toString());
+        ps.setString(3, "UNKNOWN");
         ps.setBoolean(4, priest);
         ps.setLong(5, System.currentTimeMillis());
     }
@@ -74,16 +71,6 @@ public class MarriagePlayer implements MPlayer {
     @Override
     public boolean isMarriageRequested(UUID from) {
         return requests.isCached(from);
-    }
-
-    @Override
-    public Gender getGender() {
-        return gender;
-    }
-
-    @Override
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.lenis0012.bukkit.marriage2.Gender;
 import com.lenis0012.bukkit.marriage2.MData;
 import com.lenis0012.bukkit.marriage2.config.Settings;
 import com.lenis0012.bukkit.marriage2.internal.MarriagePlugin;
@@ -76,24 +75,7 @@ public class ListQuery {
             return ChatColor.GREEN + "???";
         }
 
-        ChatColor color = ChatColor.GREEN;
-        if(Settings.GENDER_IN_LIST.value()) {
-            MarriagePlayer mp = db.loadPlayer(userId);
-            Gender gender = mp == null ? Gender.UNKNOWN : mp.getGender();
-            switch(gender) {
-                case MALE:
-                    color = ChatColor.AQUA;
-                    break;
-                case FEMALE:
-                    color = ChatColor.LIGHT_PURPLE;
-                    break;
-                case UNKNOWN:
-                    color = ChatColor.GRAY;
-                    break;
-            }
-        }
-
-        return color + getName(db, userId);
+        return ChatColor.GRAY + getName(db, userId);
     }
 
     public static String getName(DataManager db, UUID userId) {

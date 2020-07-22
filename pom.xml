@@ -64,10 +64,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.papermc</groupId>
-            <artifactId>paperlib</artifactId>
-            <version>1.0.2</version>
-            <scope>compile</scope>
+            <groupId>xyz.nkomarn</groupId>
+            <artifactId>Kerosene</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -95,16 +95,10 @@
                                     <finalName>${project.name}-Bukkit-${project.version}</finalName>
                                     <artifactSet>
                                         <includes>
-                                            <include>com.lenis0012.updater:updater-api</include>
-                                            <include>com.lenis0012.updater:updater-bukkit</include>
+                                            <include>com.github.Firestarter:updater-api</include>
+                                            <include>com.github.Firestarter:updater-bukkit</include>
                                         </includes>
                                     </artifactSet>
-                                    <relocations>
-                                        <relocation>
-                                            <pattern>com.lenis0012.updater</pattern>
-                                            <shadedPattern>com.lenis0012.bukkit.marriage2.libs.updater</shadedPattern>
-                                        </relocation>
-                                    </relocations>
                                 </configuration>
                             </execution>
                         </executions>
@@ -133,18 +127,6 @@
                                 </goals>
                                 <configuration>
                                     <finalName>${project.name}-Spigot-${project.version}</finalName>
-                                    <artifactSet>
-                                        <includes>
-                                            <include>com.lenis0012.updater:updater-api</include>
-                                            <include>com.lenis0012.updater:updater-spigot</include>
-                                        </includes>
-                                    </artifactSet>
-                                    <relocations>
-                                        <relocation>
-                                            <pattern>com.lenis0012.updater</pattern>
-                                            <shadedPattern>com.lenis0012.bukkit.marriage2.libs.updater</shadedPattern>
-                                        </relocation>
-                                    </relocations>
                                 </configuration>
                             </execution>
                         </executions>
@@ -197,7 +179,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
-                                    <include>com.lenis0012.bukkit:lenisutils</include>
+                                    <include>com.github.Firestarter:lenisutils</include>
                                 </includes>
                             </artifactSet>
                             <relocations>

@@ -5,11 +5,12 @@ import com.lenis0012.bukkit.marriage2.MPlayer;
 import com.lenis0012.bukkit.marriage2.Marriage;
 import com.lenis0012.bukkit.marriage2.config.Message;
 import com.lenis0012.bukkit.marriage2.config.Settings;
-import io.papermc.lib.PaperLib;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import xyz.nkomarn.kerosene.paperlib.PaperLib;
+import xyz.nkomarn.kerosene.util.world.Teleport;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +31,13 @@ public class CommandTeleport extends Command {
     public void execute() {
         MPlayer mPlayer = marriage.getMPlayer(player);
         MData marriage = mPlayer.getMarriage();
-        if(marriage == null) {
+        if (marriage == null) {
             reply(Message.NOT_MARRIED);
             return;
         }
 
         Player partner = Bukkit.getPlayer(marriage.getOtherPlayer(player.getUniqueId()));
-        if(partner == null) {
+        if (partner == null) {
             reply(Message.PARTNER_NOT_ONLINE);
             return;
         }
@@ -45,16 +46,16 @@ public class CommandTeleport extends Command {
         PaperLib.getChunkAtAsync(destination).thenAccept(chunk -> {
             Location safeDestination = destination;
 
-            if(player.getGameMode() != GameMode.CREATIVE) {
+            if (player.getGameMode() != GameMode.CREATIVE) {
                 safeDestination = getSafeLocation(destination);
             }
 
-            if(safeDestination == null) {
+            if (safeDestination == null) {
                 reply(Message.TELEPORT_UNSAFE);
                 return;
             }
 
-            PaperLib.teleportAsync(player, safeDestination);
+            Teleport.teleportPlayer(player, safeDestination);
             reply(Message.TELEPORTED);
             partner.sendMessage(ChatColor.translateAlternateColorCodes('&', Message.TELEPORTED_2.toString()));
         });
@@ -63,23 +64,23 @@ public class CommandTeleport extends Command {
     private Location getSafeLocation(Location destination) {
         World world = destination.getWorld();
         Block block = destination.getBlock();
-        if(block.getY() < 0 || block.getY() > world.getMaxHeight()) {
+        if (block.getY() < 0 || block.getY() > world.getMaxHeight()) {
             return null; // Out of bounds, cant teleport to void or from a bizarre height.
         }
 
-        if(isSafeGround(block.getRelative(BlockFace.DOWN))) {
+        if (isSafeGround(block.getRelative(BlockFace.DOWN))) {
             return destination; // Current destination is valid
         }
 
         // Find next potentially safe block
-        while(!(block.getType().isSolid() || block.isLiquid()) && block.getY() > 0) {
+        while (!(block.getType().isSolid() || block.isLiquid()) && block.getY() > 0) {
             block = block.getRelative(BlockFace.DOWN);
-            if(UNSAFE_TYPES.contains(block.getType())) {
+            if (UNSAFE_TYPES.contains(block.getType())) {
                 return null; // Obstructed by unsafe block
             }
         }
 
-        if(!isSafeGround(block)) {
+        if (!isSafeGround(block)) {
             return null; // Still not safe
         }
 

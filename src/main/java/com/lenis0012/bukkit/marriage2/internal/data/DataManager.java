@@ -226,7 +226,7 @@ public class DataManager {
                 PreparedStatement ps2 = connection.prepareStatement(String.format(
                         "UPDATE %splayers SET last_name=?,gender=?,priest=?,lastlogin=? WHERE unique_user_id=?;", prefix));
                 ps2.setString(1, player.getLastName());
-                ps2.setString(2, player.getGender().toString());
+                ps2.setString(2, "UNKNOWN");
                 ps2.setBoolean(3, player.isPriest());
                 ps2.setLong(4, System.currentTimeMillis());
                 ps2.setString(5, player.getUniqueId().toString());

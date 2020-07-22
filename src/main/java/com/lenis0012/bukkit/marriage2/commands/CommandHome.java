@@ -4,8 +4,8 @@ import com.lenis0012.bukkit.marriage2.MData;
 import com.lenis0012.bukkit.marriage2.MPlayer;
 import com.lenis0012.bukkit.marriage2.Marriage;
 import com.lenis0012.bukkit.marriage2.config.Message;
-import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
+import xyz.nkomarn.kerosene.util.world.Teleport;
 
 public class CommandHome extends Command {
 
@@ -18,18 +18,18 @@ public class CommandHome extends Command {
     public void execute() {
         MPlayer mPlayer = marriage.getMPlayer(player);
         MData marriage = mPlayer.getMarriage();
-        if(marriage == null) {
+        if (marriage == null) {
             reply(Message.NOT_MARRIED);
             return;
         }
 
         Location home = marriage.getHome();
-        if(home == null) {
+        if (home == null) {
             reply(Message.HOME_NOT_SET);
             return;
         }
 
-        PaperLib.teleportAsync(player, home);
+        Teleport.teleportPlayer(player, home);
         reply(Message.HOME_TELEPORT);
     }
 }
