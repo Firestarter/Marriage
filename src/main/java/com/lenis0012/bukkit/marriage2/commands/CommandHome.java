@@ -1,11 +1,11 @@
 package com.lenis0012.bukkit.marriage2.commands;
 
+import com.firestartermc.kerosene.util.PlayerUtils;
 import com.lenis0012.bukkit.marriage2.MData;
 import com.lenis0012.bukkit.marriage2.MPlayer;
 import com.lenis0012.bukkit.marriage2.Marriage;
 import com.lenis0012.bukkit.marriage2.config.Message;
 import org.bukkit.Location;
-import xyz.nkomarn.kerosene.util.world.Teleport;
 
 public class CommandHome extends Command {
 
@@ -29,7 +29,8 @@ public class CommandHome extends Command {
             return;
         }
 
-        Teleport.teleportPlayer(player, home);
-        reply(Message.HOME_TELEPORT);
+        PlayerUtils.teleportAsync(player, home).thenAccept(a -> {
+            reply(Message.HOME_TELEPORT);
+        });
     }
 }

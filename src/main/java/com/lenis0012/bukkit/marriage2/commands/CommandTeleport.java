@@ -1,5 +1,7 @@
 package com.lenis0012.bukkit.marriage2.commands;
 
+import com.firestartermc.kerosene.lib.paperlib.PaperLib;
+import com.firestartermc.kerosene.util.PlayerUtils;
 import com.lenis0012.bukkit.marriage2.MData;
 import com.lenis0012.bukkit.marriage2.MPlayer;
 import com.lenis0012.bukkit.marriage2.Marriage;
@@ -9,8 +11,6 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import xyz.nkomarn.kerosene.paperlib.PaperLib;
-import xyz.nkomarn.kerosene.util.world.Teleport;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,9 +55,10 @@ public class CommandTeleport extends Command {
                 return;
             }
 
-            Teleport.teleportPlayer(player, safeDestination);
-            reply(Message.TELEPORTED);
-            partner.sendMessage(ChatColor.translateAlternateColorCodes('&', Message.TELEPORTED_2.toString()));
+            PlayerUtils.teleportAsync(player, safeDestination).thenAccept(a -> {
+                reply(Message.TELEPORTED);
+                partner.sendMessage(ChatColor.translateAlternateColorCodes('&', Message.TELEPORTED_2.toString()));
+            });
         });
     }
 
